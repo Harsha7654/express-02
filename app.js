@@ -107,6 +107,39 @@ const buildAdminsSelectSql = (id) => {
   return sql;
 };
 
+const buildChaptersSelectSql = (subjectId, chapterId) => {
+  let sql = "SELECT * FROM chapters";
+
+  if (subjectId && chapterId) {
+    sql += ` WHERE subject_id = ${subjectId} AND chapter_id = ${chapterId}`;
+  } else if (subjectId) {
+    sql += ` WHERE subject_id = ${subjectId}`;
+  } else {
+    sql;
+  }
+
+  return sql;
+};
+
+const getChaptersController = async (req, res) => {
+  const { subjectId, chapterId } = req.params;
+
+  // Generate SQL based on input
+  const sql = buildChaptersSelectSql(subjectId, chapterId);
+
+  try {
+    const { isSuccess, result, message } = await read(sql);
+    if (!isSuccess || result.length === 0) {
+      return res.status(404).json({ message: "No chapters found" });
+    }
+    res.status(200).json(result);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: `Error fetching chapters: ${error.message}` });
+  }
+};
+
 const getAdminsController = async (req, res) => {
   const id = req.params.id; // Undefined in the case of the /api/teachers endpoint
 
@@ -183,6 +216,20 @@ app.get("/api/admin", async (req, res) => getAdminsController(req, res));
 
 // Endpoint for retrieving a admin by ID
 app.get("/api/admin/:id", async (req, res) => getAdminsController(req, res));
+
+// Get all chapters for a specific subject
+app.get("/api/subjects/:subjectId/chapters", async (req, res) => {
+  getChaptersController(req, res);
+});
+
+// Get a specific chapter for a specific subject
+app.get("/api/subjects/:subjectId/chapters/:chapterId", async (req, res) => {
+  getChaptersController(req, res);
+});
+// Get all chapters irrespective of their subject
+app.get("/api/chapters", async (req, res) => {
+  getChaptersController(req, res);
+});
 
 // Start server -----------------------
 const PORT = process.env.PORT || 5000;
