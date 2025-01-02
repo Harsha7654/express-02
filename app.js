@@ -72,6 +72,65 @@ const buildSubjectsSelectSql = (id) => {
   return sql;
 };
 
+const buildTeachersSelectSql = (id) => {
+  let sql = "";
+
+  const table = "teachers";
+  const fields = [
+    "teacher_id",
+    "username",
+    "password",
+    "email",
+    "qualification",
+  ];
+
+  if (id) {
+    sql = `SELECT ${fields} FROM ${table} WHERE teacher_id=${id}`;
+  } else {
+    sql = `SELECT ${fields} FROM ${table}`;
+  }
+
+  return sql;
+};
+
+const buildAdminsSelectSql = (id) => {
+  let sql = "";
+  const table = "admin";
+  const fields = ["admin_id", "username", "password", "email"];
+
+  if (id) {
+    sql = `SELECT ${fields} FROM ${table} WHERE admin_id=${id}`;
+  } else {
+    sql = `SELECT ${fields} FROM ${table}`;
+  }
+
+  return sql;
+};
+
+const getAdminsController = async (req, res) => {
+  const id = req.params.id; // Undefined in the case of the /api/teachers endpoint
+
+  // Access data
+  const sql = buildAdminsSelectSql(id);
+  const { isSuccess, result, message } = await read(sql);
+  if (!isSuccess) return res.status(404).json({ message });
+
+  // Responses
+  res.status(200).json(result);
+};
+
+const getTeachersController = async (req, res) => {
+  const id = req.params.id; // Undefined in the case of the /api/teachers endpoint
+
+  // Access data
+  const sql = buildTeachersSelectSql(id);
+  const { isSuccess, result, message } = await read(sql);
+  if (!isSuccess) return res.status(404).json({ message });
+
+  // Responses
+  res.status(200).json(result);
+};
+
 const getStudentsController = async (req, res) => {
   const id = req.params.id; // Undefined in the case of the /api/students endpoint
 
@@ -110,6 +169,20 @@ app.get("/api/students", async (req, res) => getStudentsController(req, res));
 app.get("/api/students/:id", async (req, res) =>
   getStudentsController(req, res)
 );
+
+// Endpoint for retrieving all teachers
+app.get("/api/teachers", async (req, res) => getTeachersController(req, res));
+
+// Endpoint for retrieving a teacher by ID
+app.get("/api/teachers/:id", async (req, res) =>
+  getTeachersController(req, res)
+);
+
+// Endpoint for retrieving all admin
+app.get("/api/admin", async (req, res) => getAdminsController(req, res));
+
+// Endpoint for retrieving a admin by ID
+app.get("/api/admin/:id", async (req, res) => getAdminsController(req, res));
 
 // Start server -----------------------
 const PORT = process.env.PORT || 5000;
