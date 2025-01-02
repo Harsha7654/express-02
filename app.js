@@ -121,6 +121,39 @@ const buildChaptersSelectSql = (subjectId, chapterId) => {
   return sql;
 };
 
+const buildQuizzesSelectSql = (chapterId, quizId) => {
+  let sql = "SELECT * FROM quizzes";
+
+  if (chapterId && quizId) {
+    sql += ` WHERE chapter_id = ${chapterId} AND quiz_id = ${quizId}`;
+  } else if (chapterId) {
+    sql += ` WHERE chapter_id = ${chapterId}`;
+  } else {
+    sql;
+  }
+
+  return sql;
+};
+
+const getQuizzesController = async (req, res) => {
+  const { chapterId, quizId } = req.params;
+
+  // Generate SQL based on input
+  const sql = buildQuizzesSelectSql(chapterId, quizId);
+
+  try {
+    const { isSuccess, result, message } = await read(sql);
+    if (!isSuccess || result.length === 0) {
+      return res.status(404).json({ message: "No quizzes found" });
+    }
+    res.status(200).json(result);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: `Error fetching quizzes: ${error.message}` });
+  }
+};
+
 const getChaptersController = async (req, res) => {
   const { subjectId, chapterId } = req.params;
 
@@ -231,6 +264,20 @@ app.get("/api/chapters", async (req, res) => {
   getChaptersController(req, res);
 });
 
+// Get all quizzes for a specific chapter
+app.get("/api/chapters/:chapterId/quizzes", async (req, res) => {
+  getQuizzesController(req, res);
+});
+
+// Get a specific quiz for a specific chapter
+app.get("/api/chapters/:chapterId/quizzes/:quizId", async (req, res) => {
+  getQuizzesController(req, res);
+});
+
+//Get all quizzes irrespective of their chapter
+app.get("/api/chapters/quizzes", async (req, res) => {
+  getQuizzesController(req, res);
+});
 // Start server -----------------------
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
