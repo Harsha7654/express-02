@@ -32,5 +32,6 @@ const getController = async (req, res, variant) => {
 const router = new Router();
 
 router.get("/", (req, res) => getController(req, res, null));
+router.get("/:id", (req, res) => getController(req, res, null));
 
 export default router;

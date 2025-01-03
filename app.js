@@ -234,6 +234,7 @@ app.get("/api/subjects/:id", async (req, res) =>
 */
 
 app.use("/api/subjects", subjectsrouter);
+
 // Endpoint for retrieving all students
 app.get("/api/students", async (req, res) => getStudentsController(req, res));
 
