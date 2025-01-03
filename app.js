@@ -1,7 +1,7 @@
 // Imports -----------------------
 import express from "express";
 import cors from "cors";
-import database from "./database.js";
+import subjectsrouter from "./routers/subjects-router.js";
 
 // Configure express app --------------
 const app = new express();
@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Controllers ------------------------
-
+/*
 const read = async (selectSql) => {
   try {
     const [result] = await database.query(selectSql);
@@ -42,6 +42,7 @@ const read = async (selectSql) => {
     };
   }
 };
+*/
 
 const buildStudentsSelectSql = (id) => {
   let sql = "";
@@ -57,7 +58,7 @@ const buildStudentsSelectSql = (id) => {
 
   return sql;
 };
-
+/*
 const buildSubjectsSelectSql = (id) => {
   let sql = "";
   const table = "subjects";
@@ -71,6 +72,7 @@ const buildSubjectsSelectSql = (id) => {
 
   return sql;
 };
+*/
 
 const buildTeachersSelectSql = (id) => {
   let sql = "";
@@ -208,7 +210,7 @@ const getStudentsController = async (req, res) => {
   // Responses
   res.status(200).json(result);
 };
-
+/*
 const getSubjectsController = async (req, res) => {
   const id = req.params.id; // Undefined in the case of the /api/students endpoint
 
@@ -220,14 +222,18 @@ const getSubjectsController = async (req, res) => {
   // Responses
   res.status(200).json(result);
 };
+*/
 
 // Endpoints -------------------------
 app.get("/hello", (req, res) => res.send("Hi My name is Harshith"));
-
+/*
 app.get("/api/subjects", async (req, res) => getSubjectsController(req, res));
 app.get("/api/subjects/:id", async (req, res) =>
   getSubjectsController(req, res)
 );
+*/
+
+app.use("/api/subjects", subjectsrouter);
 // Endpoint for retrieving all students
 app.get("/api/students", async (req, res) => getStudentsController(req, res));
 
