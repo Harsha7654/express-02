@@ -2,6 +2,7 @@
 import express from "express";
 import cors from "cors";
 import subjectsrouter from "./routers/subjects-router.js";
+import chaptersrouter from "./routers/chapters-router.js";
 
 // Configure express app --------------
 const app = new express();
@@ -108,7 +109,7 @@ const buildAdminsSelectSql = (id) => {
 
   return sql;
 };
-
+/*
 const buildChaptersSelectSql = (subjectId, chapterId) => {
   let sql = "SELECT * FROM chapters";
 
@@ -122,6 +123,7 @@ const buildChaptersSelectSql = (subjectId, chapterId) => {
 
   return sql;
 };
+*/
 
 const buildQuizzesSelectSql = (chapterId, quizId) => {
   let sql = "SELECT * FROM quizzes";
@@ -155,7 +157,7 @@ const getQuizzesController = async (req, res) => {
       .json({ message: `Error fetching quizzes: ${error.message}` });
   }
 };
-
+/*
 const getChaptersController = async (req, res) => {
   const { subjectId, chapterId } = req.params;
 
@@ -174,6 +176,7 @@ const getChaptersController = async (req, res) => {
       .json({ message: `Error fetching chapters: ${error.message}` });
   }
 };
+*/
 
 const getAdminsController = async (req, res) => {
   const id = req.params.id; // Undefined in the case of the /api/teachers endpoint
@@ -256,7 +259,7 @@ app.get("/api/admin", async (req, res) => getAdminsController(req, res));
 
 // Endpoint for retrieving a admin by ID
 app.get("/api/admin/:id", async (req, res) => getAdminsController(req, res));
-
+/*
 // Get all chapters for a specific subject
 app.get("/api/subjects/:subjectId/chapters", async (req, res) => {
   getChaptersController(req, res);
@@ -270,6 +273,9 @@ app.get("/api/subjects/:subjectId/chapters/:chapterId", async (req, res) => {
 app.get("/api/chapters", async (req, res) => {
   getChaptersController(req, res);
 });
+*/
+
+app.use("/api", chaptersrouter);
 
 // Get all quizzes for a specific chapter
 app.get("/api/chapters/:chapterId/quizzes", async (req, res) => {
