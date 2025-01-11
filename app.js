@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import subjectsrouter from "./routers/subjects-router.js";
 import chaptersrouter from "./routers/chapters-router.js";
+import quizzesrouter from "./routers/quizzes-router.js";
 
 // Configure express app --------------
 const app = new express();
@@ -124,7 +125,7 @@ const buildChaptersSelectSql = (subjectId, chapterId) => {
   return sql;
 };
 */
-
+/*
 const buildQuizzesSelectSql = (chapterId, quizId) => {
   let sql = "SELECT * FROM quizzes";
 
@@ -138,6 +139,7 @@ const buildQuizzesSelectSql = (chapterId, quizId) => {
 
   return sql;
 };
+
 
 const getQuizzesController = async (req, res) => {
   const { chapterId, quizId } = req.params;
@@ -157,6 +159,7 @@ const getQuizzesController = async (req, res) => {
       .json({ message: `Error fetching quizzes: ${error.message}` });
   }
 };
+*/
 /*
 const getChaptersController = async (req, res) => {
   const { subjectId, chapterId } = req.params;
@@ -275,8 +278,9 @@ app.get("/api/chapters", async (req, res) => {
 });
 */
 
-app.use("/api", chaptersrouter);
+app.use("/api/chapters", chaptersrouter);
 
+/*
 // Get all quizzes for a specific chapter
 app.get("/api/chapters/:chapterId/quizzes", async (req, res) => {
   getQuizzesController(req, res);
@@ -291,6 +295,10 @@ app.get("/api/chapters/:chapterId/quizzes/:quizId", async (req, res) => {
 app.get("/api/chapters/quizzes", async (req, res) => {
   getQuizzesController(req, res);
 });
+*/
+
+app.use("/api/quizzes", quizzesrouter);
+
 // Start server -----------------------
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
