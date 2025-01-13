@@ -6,6 +6,7 @@ import chaptersrouter from "./routers/chapters-router.js";
 import quizzesrouter from "./routers/quizzes-router.js";
 import studentsrouter from "./routers/students-router.js";
 import teachersrouter from "./routers/teachers-router.js";
+import adminrouter from "./routers/admin-router.js";
 
 // Configure express app --------------
 const app = new express();
@@ -26,32 +27,6 @@ app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const buildAdminsSelectSql = (id) => {
-  let sql = "";
-  const table = "admin";
-  const fields = ["admin_id", "username", "password", "email"];
-
-  if (id) {
-    sql = `SELECT ${fields} FROM ${table} WHERE admin_id=${id}`;
-  } else {
-    sql = `SELECT ${fields} FROM ${table}`;
-  }
-
-  return sql;
-};
-
-const getAdminsController = async (req, res) => {
-  const id = req.params.id; // Undefined in the case of the /api/teachers endpoint
-
-  // Access data
-  const sql = buildAdminsSelectSql(id);
-  const { isSuccess, result, message } = await read(sql);
-  if (!isSuccess) return res.status(404).json({ message });
-
-  // Responses
-  res.status(200).json(result);
-};
-
 // Endpoints -------------------------
 app.get("/hello", (req, res) => res.send("Hi My name is Harshith"));
 
@@ -60,11 +35,8 @@ app.use("/api/subjects", subjectsrouter);
 app.use("/api/students", studentsrouter);
 
 app.use("/api/teachers", teachersrouter);
-// Endpoint for retrieving all admin
-app.get("/api/admin", async (req, res) => getAdminsController(req, res));
 
-// Endpoint for retrieving a admin by ID
-app.get("/api/admin/:id", async (req, res) => getAdminsController(req, res));
+app.use("/api/admin", adminrouter);
 
 app.use("/api/chapters", chaptersrouter);
 
