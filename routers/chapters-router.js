@@ -17,8 +17,12 @@ const controller = new Controller(accessor);
 // Endpoints -------------------
 const router = new Router();
 
+// Get all chapters irrespective of their subject
 router.get("/", (req, res) => controller.get(req, res, null));
+
+// Get chapter by chapter ID
 router.get("/:id", (req, res) => controller.get(req, res, null));
+
 // Get all chapters for a specific subject
 router.get("/subject/:id", (req, res) => controller.get(req, res, "subject"));
 

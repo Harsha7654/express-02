@@ -17,7 +17,10 @@ const controller = new Controller(accessor);
 // Endpoints -----------------------------
 const router = new Router();
 
+// Endpoint for retrieving all students
 router.get("/", (req, res) => controller.get(req, res, null));
+
+// Endpoint for retrieving a student by ID
 router.get("/:id", (req, res) => controller.get(req, res, null));
 
 export default router;
