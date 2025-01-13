@@ -25,4 +25,8 @@ router.get("/:id", (req, res) => controller.get(req, res, null));
 
 // Get all quizzes for a specific chapter
 router.get("/chapter/:id", (req, res) => controller.get(req, res, "chapter"));
+
+router.post("/", controller.post);
+router.put("/:id", controller.put);
+router.delete("/:id", controller.delete);
 export default router;
