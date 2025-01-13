@@ -5,6 +5,7 @@ import subjectsrouter from "./routers/subjects-router.js";
 import chaptersrouter from "./routers/chapters-router.js";
 import quizzesrouter from "./routers/quizzes-router.js";
 import studentsrouter from "./routers/students-router.js";
+import teachersrouter from "./routers/teachers-router.js";
 
 // Configure express app --------------
 const app = new express();
@@ -24,27 +25,6 @@ app.use(function (req, res, next) {
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-const buildTeachersSelectSql = (id) => {
-  let sql = "";
-
-  const table = "teachers";
-  const fields = [
-    "teacher_id",
-    "username",
-    "password",
-    "email",
-    "qualification",
-  ];
-
-  if (id) {
-    sql = `SELECT ${fields} FROM ${table} WHERE teacher_id=${id}`;
-  } else {
-    sql = `SELECT ${fields} FROM ${table}`;
-  }
-
-  return sql;
-};
 
 const buildAdminsSelectSql = (id) => {
   let sql = "";
@@ -72,32 +52,14 @@ const getAdminsController = async (req, res) => {
   res.status(200).json(result);
 };
 
-const getTeachersController = async (req, res) => {
-  const id = req.params.id; // Undefined in the case of the /api/teachers endpoint
-
-  // Access data
-  const sql = buildTeachersSelectSql(id);
-  const { isSuccess, result, message } = await read(sql);
-  if (!isSuccess) return res.status(404).json({ message });
-
-  // Responses
-  res.status(200).json(result);
-};
-
 // Endpoints -------------------------
 app.get("/hello", (req, res) => res.send("Hi My name is Harshith"));
 
 app.use("/api/subjects", subjectsrouter);
 
 app.use("/api/students", studentsrouter);
-// Endpoint for retrieving all teachers
-app.get("/api/teachers", async (req, res) => getTeachersController(req, res));
 
-// Endpoint for retrieving a teacher by ID
-app.get("/api/teachers/:id", async (req, res) =>
-  getTeachersController(req, res)
-);
-
+app.use("/api/teachers", teachersrouter);
 // Endpoint for retrieving all admin
 app.get("/api/admin", async (req, res) => getAdminsController(req, res));
 
