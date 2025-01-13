@@ -26,4 +26,8 @@ router.get("/:id", (req, res) => controller.get(req, res, null));
 // Get all chapters for a specific subject
 router.get("/subject/:id", (req, res) => controller.get(req, res, "subject"));
 
+router.post("/", controller.post);
+router.put("/:id", controller.put);
+router.delete("/:id", controller.delete);
+
 export default router;
