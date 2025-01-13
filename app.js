@@ -4,6 +4,7 @@ import cors from "cors";
 import subjectsrouter from "./routers/subjects-router.js";
 import chaptersrouter from "./routers/chapters-router.js";
 import quizzesrouter from "./routers/quizzes-router.js";
+import studentsrouter from "./routers/students-router.js";
 
 // Configure express app --------------
 const app = new express();
@@ -45,7 +46,7 @@ const read = async (selectSql) => {
   }
 };
 */
-
+/*
 const buildStudentsSelectSql = (id) => {
   let sql = "";
 
@@ -60,6 +61,7 @@ const buildStudentsSelectSql = (id) => {
 
   return sql;
 };
+*/
 /*
 const buildSubjectsSelectSql = (id) => {
   let sql = "";
@@ -204,7 +206,7 @@ const getTeachersController = async (req, res) => {
   // Responses
   res.status(200).json(result);
 };
-
+/*
 const getStudentsController = async (req, res) => {
   const id = req.params.id; // Undefined in the case of the /api/students endpoint
 
@@ -216,6 +218,7 @@ const getStudentsController = async (req, res) => {
   // Responses
   res.status(200).json(result);
 };
+*/
 /*
 const getSubjectsController = async (req, res) => {
   const id = req.params.id; // Undefined in the case of the /api/students endpoint
@@ -240,7 +243,7 @@ app.get("/api/subjects/:id", async (req, res) =>
 */
 
 app.use("/api/subjects", subjectsrouter);
-
+/*
 // Endpoint for retrieving all students
 app.get("/api/students", async (req, res) => getStudentsController(req, res));
 
@@ -248,7 +251,8 @@ app.get("/api/students", async (req, res) => getStudentsController(req, res));
 app.get("/api/students/:id", async (req, res) =>
   getStudentsController(req, res)
 );
-
+*/
+app.use("/api/students", studentsrouter);
 // Endpoint for retrieving all teachers
 app.get("/api/teachers", async (req, res) => getTeachersController(req, res));
 

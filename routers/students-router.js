@@ -1,6 +1,6 @@
 import { Router } from "express";
 import Model from "../models/Model.js";
-import modelConfig from "../models/subjects-model.js";
+import modelConfig from "../models/students-model.js";
 import database from "../database.js";
 import Accessor from "../accessor/accessor.js";
 import Controller from "../controller/Controller.js";
