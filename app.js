@@ -28,7 +28,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Endpoints -------------------------
-app.get("/hello", (req, res) => res.send("Hi My name is Harshith"));
 
 app.use("/api/subjects", subjectsrouter);
 
