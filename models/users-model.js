@@ -21,7 +21,7 @@ model.buildReadQuery = (id, variant) => {
   let sql = "";
 
   switch (variant) {
-    case "teachers":
+    case "userRole":
       sql += `SELECT ${resolvedFields} FROM ${resolvedTable} WHERE UserRoleID = :ID`;
       break;
     case "students":

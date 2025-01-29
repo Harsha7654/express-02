@@ -23,4 +23,6 @@ router.get("/", (req, res) => controller.get(req, res, null));
 // Get users based on UserID
 router.get("/:id", (req, res) => controller.get(req, res, null));
 
+router.get("/userRole/:id", (req, res) => controller.get(req, res, "userRole"));
+
 export default router;
