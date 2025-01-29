@@ -20,4 +20,7 @@ const router = new Router();
 // Endpoint to retrieve all userRoles
 router.get("/", (req, res) => controller.get(req, res, null));
 
+// Endpoint to retrieving userRole by ID
+router.get("/:id", (req, res) => controller.get(req, res, null));
+
 export default router;
