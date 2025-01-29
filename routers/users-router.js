@@ -20,4 +20,7 @@ const router = new Router();
 // Get all users irrespective of their userRoles
 router.get("/", (req, res) => controller.get(req, res, null));
 
+// Get users based on UserID
+router.get("/:id", (req, res) => controller.get(req, res, null));
+
 export default router;
