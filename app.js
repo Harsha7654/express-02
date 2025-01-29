@@ -7,6 +7,7 @@ import quizzesrouter from "./routers/quizzes-router.js";
 import studentsrouter from "./routers/students-router.js";
 import teachersrouter from "./routers/teachers-router.js";
 import adminrouter from "./routers/admin-router.js";
+import userRolerouter from "./routers/userRole-router.js";
 
 // Configure express app --------------
 const app = new express();
@@ -40,6 +41,8 @@ app.use("/api/admin", adminrouter);
 app.use("/api/chapters", chaptersrouter);
 
 app.use("/api/quizzes", quizzesrouter);
+
+app.use("/api/userRoles", userRolerouter);
 
 // Start server -----------------------
 const PORT = process.env.PORT || 5000;
