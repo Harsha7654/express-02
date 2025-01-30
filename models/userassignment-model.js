@@ -10,6 +10,9 @@ model.buildReadQuery = (id, variant) => {
   let sql = "";
 
   switch (variant) {
+    case "user":
+      sql += `SELECT ${resolvedFields} FROM ${resolvedTable} WHERE UserID = :ID`;
+      break;
     default:
       sql = `SELECT ${resolvedFields} FROM ${resolvedTable}`;
       if (id) sql += ` WHERE UserAssignmentID=:ID`;

@@ -23,4 +23,7 @@ router.get("/", (req, res) => controller.get(req, res, null));
 // Endpoint for retrieving all assignments based on ID
 router.get("/:id", (req, res) => controller.get(req, res, null));
 
+// Endpoint to get subjects based on user assignment with UserID
+router.get("/user/:id", (req, res) => controller.get(req, res, "user"));
+
 export default router;
