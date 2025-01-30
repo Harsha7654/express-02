@@ -11,7 +11,7 @@ model.buildReadQuery = (id, variant) => {
 
   switch (variant) {
     case "user":
-      sql += `SELECT usa.UserAssignmentID, usa.UserID, usa.SubjectID, s.name, s.level, s.difficulty, s.image FROM userSubjectAssignment usa JOIN subjects s ON usa.SubjectID = s.subject_id WHERE usa.UserID = :ID`;
+      sql += `SELECT UserAssignmentID, UserID, SubjectID, name, level, difficulty, image FROM userSubjectAssignment JOIN subjects ON SubjectID = subject_id WHERE UserID = :ID`;
       break;
     default:
       sql = `SELECT ${resolvedFields} FROM ${resolvedTable}`;
