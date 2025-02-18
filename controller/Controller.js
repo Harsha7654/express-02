@@ -9,6 +9,8 @@ class Controller {
     const id = req.params.id;
 
     // Validate request
+    const { isValid, message: validatorMessage } = this.validator.get(id);
+    if (!isValid) return res.status(404).json({ message: validatorMessage });
 
     // Access data
     const {
