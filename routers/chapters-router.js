@@ -1,9 +1,14 @@
 import { Router } from "express";
 import database from "../database.js";
+import schema from "../validator/chapters-schema.js";
 import modelConfig from "../models/chapters-model.js";
 import Model from "../models/Model.js";
 import Accessor from "../accessor/accessor.js";
 import Controller from "../controller/Controller.js";
+import Validator from "../validator/Validator.js";
+
+// Validator ---------------------------
+const validator = new Validator(schema);
 
 // Model -----------------------
 const model = new Model(modelConfig);
@@ -12,7 +17,7 @@ const model = new Model(modelConfig);
 const accessor = new Accessor(model, database);
 
 // Controllers -----------------
-const controller = new Controller(accessor);
+const controller = new Controller(validator, accessor);
 
 // Endpoints -------------------
 const router = new Router();

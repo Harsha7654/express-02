@@ -7,7 +7,7 @@ schema.mutablefields = ["name", "level", "difficulty", "image"];
 schema.recordSchema = joi
   .object({
     subject_id: joi.number().integer(),
-    name: joi.string().max(255).required(),
+    name: joi.string().max(255),
     level: joi.number().integer().allow(null),
     difficulty: joi.string().max(50).allow(null),
     image: joi.string().max(255).allow(null),
