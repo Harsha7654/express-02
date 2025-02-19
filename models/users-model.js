@@ -1,6 +1,6 @@
 const model = {};
 
-model.table = "User";
+model.table = "Users";
 model.mutableFields = [
   "UserUsername",
   "UserPassword",
@@ -10,7 +10,7 @@ model.mutableFields = [
 model.idField = "UserID";
 
 model.buildReadQuery = (id, variant) => {
-  let resolvedTable = "User";
+  let resolvedTable = "Users";
   let resolvedFields = [
     "UserID",
     "UserUsername",
